@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Bem vindo{% endblock %}
+
+{% block container %}
+<div class="page-header">
+  <h2>Contas <small>Adicione suas contas das redes sociais</small></h2>
+</div>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    Adicionar Conta <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'accounts_twitter_new' %}">Twitter</a></li>
+    <li><a href="{% url 'accounts_facebook_new' %}">Facebook</a></li>
+    <li><a href="{% url 'accounts_youtube_new' %}">Youtube</a></li>
+  </ul>
+</div>
+
+<br><br>
+
+{% if account_list %}
+<table class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Provedor</th>
+      <th>Id no Provedor</th>
+      <th>Login no Provedor</th>
+      <th>Expira em</th>
+      <th>Adicionado em</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for account in account_list %}
+    <tr>
+      <td>{{ account.get_provider_display }}</td>
+      <td>{{ account.provider_id }}</td>
+      <td>{{ account.provider_username }}</td>
+      <td>{{ account.expires_in }}</td>
+      <td>{{ account.updated_on }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+<p>Sem contas cadastradas.</p>
+{% endif %}
+
+{% endblock %}
+
+
+{% block extrajs %}
+<script>
+$(document).ready(function(){
+
+  $('.nav-accounts').addClass('active');
+
+});
+</script>
+{% endblock %}
